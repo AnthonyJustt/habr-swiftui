@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings - EN
+  habr
+
+  Created by Anton Krivonozhenkov on 05.05.2021.
+  
+*/
+
+"Settings.Title" = "Settings";
+"Language.Settings" = "Language Settings";
+"iPhone.Storage" = "iPhone Storage";
+"General.Settings" = "General";
+"Interface.Language" = "Interface";
+"Content.Language" = "Language of the posts";
+"Calc.current.cache.size" = "Calculate current cache size";
+"Clear.cache" = "Clear cache";
+"Reset.all" = "Reset all settings";
+"Cache.size.is" = "Cache";
+"Reset.all.explain" = "The app will be restarted: cache and reading list will be cleared, you will be returned to the initial screen.";
+"Interface.ru" = "Russian";
+"Interface.en" = "English";
+"Post.ru" =  "Russian";
+"Post.en" = "English";
+"Post.all" = "English & Russian";
