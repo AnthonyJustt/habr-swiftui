@@ -27,10 +27,10 @@ Adding article to reading list
 
 Article with dark theme
 <p float="left">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article-screen.png" height="500 /">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article-screen-dark.png" height="500" />
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article.png" height="500 /">
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article-dark.png" height="500" />
 </p>
 <p float="left">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article2-screen.png" height="500 /">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article2-screen-dark.png" height="500" />
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article2.png" height="500 /">
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/article2-dark.png" height="500" />
 </p>
