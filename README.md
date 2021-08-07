@@ -6,26 +6,26 @@ Main Screen
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/main-screen-dark.png" height="500" />
 </p>
 
-Initial screens
+<br>Initial screens
 <p float="left">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/initial-screen.png" height="500 /">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/initial-screen-dark.png" height="500" />
 </p>
 
-Initial screens with Glass Morphism for iOS 15
+<br>Initial screens with Glass Morphism for iOS 15
 <p float="left">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/initial-screen-glassmorphism.png" height="500 /">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/initial-screen-glassmorphism-dark.png" height="500" />
 </p>
 by <a href="https://www.youtube.com/watch?v=LbpGjAJRhLM" target="_blank">kavsoft</a>
 
-Adding article to reading list
+<br>Adding article to reading list
 <p float="left">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/addto-reading-list.png" height="500 /">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/addto-reading-list-dark.png" height="500" />
 </p>
 
-Article with dark theme
+<br>Article with dark theme
 <p float="left">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/article.png" height="500 /">
   <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/article-dark.png" height="500" />
