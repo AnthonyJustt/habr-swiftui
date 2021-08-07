@@ -33,22 +33,26 @@ struct ArticlePreviewView: View {
                 <div class="tm-article-body__content tm-article-body__content_formatted tm-article-body__content_formatted-v1">
                 """
     var body: some View {
-       // WebView_(request: start2 + articlePreview + end)
+    //    WebView_(request: start2 + articlePreview + end)
 
-            Webview(dynamicHeight: $webViewHeight, linkwv: "", stringwv: start2 + articlePreview + end)
+   //         Webview(dynamicHeight: $webViewHeight, linkwv: "", stringwv: start2 + articlePreview + end)
+        Text(articlePreview)
+        
     }
     
 }
 
-//struct WebView_ : UIViewRepresentable {
-//    let request: String
-//    func makeUIView(context: Context) -> WKWebView  {
-//        return WKWebView()
-//    }
-//    func updateUIView(_ uiView: WKWebView, context: Context) {
-//        uiView.loadHTMLString(request, baseURL: nil)
-//    }
-//}
+struct WebView_ : UIViewRepresentable {
+    let request: String
+    func makeUIView(context: Context) -> WKWebView  {
+        return WKWebView()
+    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.loadHTMLString(request, baseURL: nil)
+        
+        
+    }
+}
 
 struct ArticlePreviewView_Previews: PreviewProvider {
     static var previews: some View {

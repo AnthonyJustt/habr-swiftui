@@ -19,6 +19,7 @@ func fname(furl: String) -> String {
             contents = try String(contentsOf: url)
             print("fname: content was successfully received")
         } catch {
+            print(url)
             print("fname: contents could not be loaded")
         }
     } else {
@@ -47,14 +48,14 @@ func fparse(fhtml: String) -> Array<FeedListItem> {
     
     do {
         let html: String = fhtml;
-        let els: Elements = try SwiftSoup.parse(html).select("a.tm-article-snippet__title-link") // заголовок статье
+        let els: Elements = try SwiftSoup.parse(html).select("a.tm-article-snippet__title-link") // заголовок статьи
         let els1: Elements = try SwiftSoup.parse(html).select("a.tm-user-info__username") // автор статьи
-        let els2: Elements = try SwiftSoup.parse(html).select("span.tm-icon-wrapper__value") // количество просмотров
+        let els2: Elements = try SwiftSoup.parse(html).select("span.tm-icon-counter__value") // количество просмотров
         let els3: Elements = try SwiftSoup.parse(html).select("span.bookmarks-button__counter") // закладки
         let els4: Elements = try SwiftSoup.parse(html).select("time") // дата статьи
         let els5: Elements = try SwiftSoup.parse(html).select("span.tm-votes-meter__value") // рейтинг статьи
         let els6: Elements = try SwiftSoup.parse(html).select("span.tm-article-comments-counter-link__value") // комментарии к статье
-        let els7: Elements = try SwiftSoup.parse(html).select("div.tm-article-body__content") // превью статьи
+        let els7: Elements = try SwiftSoup.parse(html).select("div.tm-article-body") // превью статьи
         
         for i in 0 ..< els.array().count {
             
@@ -189,21 +190,21 @@ func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArr
         var indentNumber: String
         
         let doc: Document = try SwiftSoup.parse(html)
-        let link: Element = try doc.select("span.tm-comments__comments-count").first()!
+        let link: Element = try doc.select("span.tm-comments-wrapper__comments-count").first()!
         numberOfC = try link.text();
         
         let els4: Elements = try SwiftSoup.parse(html).select("div.tm-comment__body-content") // текст комментария
-        let els5: Elements = try SwiftSoup.parse(html).select("a.tm-comment-thread-functional__comment-link") // дата комментария + ссылка на комментарий
+        let els5: Elements = try SwiftSoup.parse(html).select("a.tm-comment-thread__comment-link") // дата комментария + ссылка на комментарий
         let els6: Elements = try SwiftSoup.parse(html).select("a.tm-user-info__username") // автор комментария + ссылка на автора
         let els7: Elements = try SwiftSoup.parse(html).select("span.tm-votes-meter__value") // рейтинг комментария
         
-        let els8: Elements = try SwiftSoup.parse(html).select("div[class^=tm-comment__indent_l-]")
+        let els8: Elements = try SwiftSoup.parse(html).select("div[class^=tm-comment-thread__indent_l-]")
         
         for i in 0 ..< els4.array().count {
             indentNumber = try els8[i].attr("class")
-            indentNumber = String(indentNumber[indentNumber.index(indentNumber.startIndex, offsetBy: 21)...])
+            indentNumber = String(indentNumber[indentNumber.index(indentNumber.startIndex, offsetBy: 28)...])
             arrayToReturn.append(commentsItem(
-                content: try els4[i].text(),
+                content: try els4[i].html(),
                 indent: indentNumber,
                 author: try els6[i].text(),
                 author_link: try els6[i].attr("href"),

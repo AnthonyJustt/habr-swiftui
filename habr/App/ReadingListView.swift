@@ -58,7 +58,7 @@ struct ReadingListView: View {
                     })
                 }
                 .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive)).animation(Animation.spring())
-                .navigationTitle("Список чтения")
+                .navigationTitle(LocalizedStringKey("ReadingList.Title"))
                 .addSearchBar(self.searchBar)
                 //  .navigationBarItems(trailing: EditButton())
                 .navigationBarItems(trailing:

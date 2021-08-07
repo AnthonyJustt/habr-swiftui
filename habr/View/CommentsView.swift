@@ -15,20 +15,20 @@ struct CommentsView: View {
     @State var isHidden: Bool = true
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title)
-                .font(.system(.title2))
-                .foregroundColor(Color("FeedListFont"))
-                .fontWeight(.bold)
-                .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
-                .multilineTextAlignment(.leading)
-                .padding()
-            Divider()
-                .padding(.horizontal)
-        }
-        
         ZStack {
             ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(title)
+                        .font(.system(.title2))
+                        .foregroundColor(Color("FeedListFont"))
+                        .fontWeight(.bold)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .padding()
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
                 if numberOfComments != "0" {
                     Text("Комментарии - \(numberOfComments)")
                         .padding()

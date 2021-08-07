@@ -13,6 +13,14 @@ struct commentListItemView: View {
     @State private var showingActionSheet = false
     @State private var isShowingAuthor: Bool = false
     
+    func str(s: String) -> Bool {
+        if s.contains("Комментарий был изменен") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         HStack {
             // indent starts
@@ -45,17 +53,33 @@ struct commentListItemView: View {
                             AuthorView(farray: AuthorItem(card_name: "", card_nickname: "", short_info: "", karma: "", rating: ""), title: commentsListItem.author, link: commentsListItem.author_link)
                         })
                     Spacer()
-                    Text(commentsListItem.date)
-                        .font(.system(.body))
-                        .foregroundColor(.gray)
+                    
+                    if str(s: commentsListItem.date) == true {
+                        HStack {
+                            Text(commentsListItem.date.replacingOccurrences(of: "Комментарий был изменен", with: ""))
+                                .font(.system(.body))
+                                .foregroundColor(.gray)
+                            Image(systemName: "pencil")
+                                .font(.title2)
+                        }
+                    } else {
+                        Text(commentsListItem.date)
+                            .font(.system(.body))
+                            .foregroundColor(.gray)
+                    }
                 }
                 if (Int(commentsListItem.rate) ?? 0) < 0 {
-                    Text(commentsListItem.content)
-                        .multilineTextAlignment(.leading)
+//                    Text(commentsListItem.content)
+//                        .multilineTextAlignment(.leading)
+//                        .foregroundColor(.gray)
+                    myAttrString(paragraph: commentsListItem.content)
                         .foregroundColor(.gray)
                 } else {
-                    Text(commentsListItem.content)
-                        .multilineTextAlignment(.leading)
+//                    Text(commentsListItem.content)
+//                        .multilineTextAlignment(.leading)
+//                        .foregroundColor(Color("FeedListFont"))
+                    myAttrString(paragraph: commentsListItem.content)
+                        .foregroundColor(Color("FeedListFont"))
                 }
                 HStack(alignment: .center, spacing: 2) {
                     Image(systemName: "rhombus")

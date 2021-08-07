@@ -14,26 +14,26 @@ struct moreView: View {
             VStack {
                 HStack {
                     NavigationLink(
-                        destination: FeedView(farray: [], fNewsArray: [], viewName: "Habr  —  Песочница", showingNews: false, httpsAddress: "https://m.habr.com/ru/sandbox/invited/", tabSelection: $tabSelection)) {
-                        SectionView(image: "pencil.and.outline", label: "Песочница")
+                        destination: FeedView(farray: [], fNewsArray: [], viewName: "More.SandboxTitle", showingNews: false, httpsAddress: "https://m.habr.com/ru/sandbox/invited/", tabSelection: $tabSelection)) {
+                        SectionView(image: "pencil.and.outline", label: "More.Sandbox")
                     }
                     Spacer()
                     NavigationLink(destination: UserView()) {
-                        SectionView(image: "person.icloud", label: "Профиль")
+                        SectionView(image: "person.icloud", label: "More.Profile")
                     }
                     Spacer()
                     NavigationLink(destination: AboutHabr()) {
-                        SectionView(image: "h.square.fill", label: "О Хабре")
+                        SectionView(image: "h.square.fill", label: "More.AboutHabr")
                     }
                 }.padding()
                 HStack {
                     Spacer()
                     NavigationLink(destination: SettingsView()) {
-                        SectionView(image: "gear", label: "Настройки")
+                        SectionView(image: "gear", label: "More.Settings")
                     }
                     Spacer()
                     NavigationLink(destination: EmptyView()) {
-                    SectionView(image: "info.circle", label: "О программе")
+                    SectionView(image: "info.circle", label: "More.AboutApp")
                     // not implemented yet
                     }
                     Spacer()
@@ -51,7 +51,7 @@ struct SectionView: View {
         VStack {
             Image(systemName: image)
                 .font(.largeTitle)
-            Text(label)
+            Text(LocalizedStringKey(label))
         }
     }
 }

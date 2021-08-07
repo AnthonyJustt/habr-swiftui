@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OnboardingView: View {
+struct OnboardingView_14: View {
     
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     
@@ -21,18 +21,18 @@ struct OnboardingView: View {
             Spacer()
             TitleView()
             VStack(alignment: .leading) {
-                InformationDetailView(title: "Лента и новости", subTitle: "Список публикаций, которые были написаны за последние сутки", imageName: "house")
+                InformationDetailView(title: "Onboard.FeedandNews", subTitle: "Onboard.FeedandNewsText", imageName: "house", primaryColor: "FeedListFont")
                 
-                InformationDetailView(title: "Список чтения", subTitle: "Сохранённые публикации, чтобы прочесть их позже", imageName: "eyeglasses")
+                InformationDetailView(title: "Onboard.ReadingList", subTitle: "Onboard.ReadingListText", imageName: "eyeglasses", primaryColor: "FeedListFont")
                 
-                InformationDetailView(title: "Профиль", subTitle: "Список публикаций, закладок, собственная лента по интересам", imageName: "person.icloud")
+                InformationDetailView(title: "Onboard.Profile", subTitle: "Onboard.ProfileText", imageName: "person.icloud", primaryColor: "FeedListFont")
             }
             .padding(.horizontal)
             Spacer()
             Button(action: {
                 isOnboarding = false
             }) {
-                Text("Начать")
+                Text("Onboard.getstarted")
                     .foregroundColor(.white)
                     .font(.headline)
                     .padding()
@@ -49,19 +49,21 @@ struct OnboardingView: View {
 struct TitleView: View {
     var body: some View {
         VStack {
-            Image("onBoardingImage")
+            Image("habr_logo_white")
+                .renderingMode(.template)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 150, alignment: .center)
+                .frame(width: 100, alignment: .center)
+                .foregroundColor(Color("AccentColor"))
                 .accessibility(hidden: true)
             
-            Text("Добро пожаловать")
-                .fontWeight(.black)
+            Text(LocalizedStringKey("Onboard.welcome"))
+             //   .fontWeight(.black)
                 .font(.system(size: 36))
             
-            Text("Хабр")
-                .fontWeight(.black)
-                .font(.system(size: 36))
+            Text(LocalizedStringKey("Onboard.habr"))
+                .fontWeight(.semibold)
+                .font(.system(size: 60))
                 .foregroundColor(Color("AccentColor"))
         }
     }
@@ -71,23 +73,27 @@ struct InformationDetailView: View {
     var title: String = "title"
     var subTitle: String = "subTitle"
     var imageName: String = "car"
+    var primaryColor: String
     var body: some View {
         HStack(alignment: .center) {
             Image(systemName: imageName)
                 .font(.largeTitle)
-                .foregroundColor(Color("FeedListFont"))
+//                .foregroundColor(Color("FeedListFont"))
+                .foregroundColor(Color(primaryColor))
                 .padding()
                 .accessibility(hidden: true)
                 .frame(width: 70)
             
             VStack(alignment: .leading) {
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.headline)
-                    .foregroundColor(.primary)
+                   // .foregroundColor(.primary)
+                    .foregroundColor(Color(primaryColor))
+                    .fontWeight(.semibold)
                 
-                Text(subTitle)
+                Text(LocalizedStringKey(subTitle))
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color(primaryColor))
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
@@ -97,6 +103,9 @@ struct InformationDetailView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        OnboardingView_14()
+            .preferredColorScheme(.dark)
+        OnboardingView_14()
+            .preferredColorScheme(.light)
     }
 }

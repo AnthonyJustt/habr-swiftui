@@ -107,7 +107,7 @@ struct FeedView: View {
                 
             }
         }
-        .navigationTitle(viewName)
+        .navigationTitle(LocalizedStringKey(viewName))
         .coordinateSpace(name: "RefreshControl")
         //   .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(perform: {
@@ -140,6 +140,6 @@ struct FeedView_Previews: PreviewProvider {
                                             link: "") ]
     @State static var previewTabSelection = 3
     static var previews: some View {
-        FeedView(farray: fli, fNewsArray: fna, viewName: "Habr  —  Лента", showingNews: true, httpsAddress: "https://m.habr.com/ru/all/", tabSelection: $previewTabSelection)
+        FeedView(farray: fli, fNewsArray: fna, viewName: "Content.NewsTitle", showingNews: true, httpsAddress: "https://m.habr.com/ru/all/", tabSelection: $previewTabSelection)
     }
 }

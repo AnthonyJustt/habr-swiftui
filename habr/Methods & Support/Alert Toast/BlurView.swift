@@ -1,3 +1,10 @@
+//
+//  BlurView.swift
+//  AlertToastPreview
+//
+//  Created by אילי זוברמן on 14/02/2021.
+//
+
 import Foundation
 import SwiftUI
 

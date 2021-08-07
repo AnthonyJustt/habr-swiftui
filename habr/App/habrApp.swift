@@ -16,7 +16,11 @@ struct habrApp: App {
     var body: some Scene {
         WindowGroup {
             if isOnboarding{
-                OnboardingView()
+                if #available(iOS 15, *) {
+                    OnboardingView_15()
+                } else {
+                    OnboardingView_14()
+                }
             } else {
                ContentView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)

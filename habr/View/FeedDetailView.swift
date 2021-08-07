@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WebKit
 
 func checkingLocal(fileName: String) -> (html: String, isLocal: Bool) {
     let htmlString: String
@@ -107,10 +108,29 @@ struct FeedDetailView: View {
                         .fontWeight(.bold)
                         .multilineTextAlignment(.leading)
                         .lineLimit(nil)
-                        .padding(20)
+                        .padding([.horizontal, .top], 20)
                     
                     Webview(dynamicHeight: $webViewHeight, linkwv: link, stringwv: "")
                         .frame(height: webViewHeight)
+                    
+                    //                    WebView_(request: readArticleFromFile(fileName: link))
+                    //                        .frame(height: 500)
+                    //
+                    //                    WebViewT(request: URLRequest(url: URL(string: "https://m.habr.com"+link)!))
+                    //                        .frame(height: 500)
+                    //
+                    //
+                    //                    let fileNameFinal = link.replacingOccurrences(of: "/", with: "-")
+                    //                    //                        let url = getDocumentsDirectory().appendingPathComponent(fileNameFinal)
+                    //
+                    //                    let documentDirUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                    //                    let indexFileUrl = documentDirUrl.appendingPathComponent(fileNameFinal)
+                    //                    WebViewF(request: indexFileUrl, request2: documentDirUrl)
+                    //                        .frame(height: 500)
+                    
+                    
+                    
+                    
                     
                     VStack(alignment: .leading) {
                         Text("Хабы: ").bold()
@@ -145,13 +165,23 @@ struct FeedDetailView: View {
                     }
                     
                 }
-                .navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(trailing:
-                                        Button (action:{
-                                            if isLocal { isLocal.toggle() }
-                                        }){
-                                            Image(systemName: checkingLocal(fileName: link).isLocal ? "externaldrive.fill.badge.checkmark" : "cloud.fill").font(.title3)
-                                        })
+                //.navigationBarTitle("", displayMode: .inline)
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                
+                .toolbar(content: {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                        }) {
+                            Image(systemName: "bubble.right").font(.title3)
+                        }
+                        Button(action: {
+                            if isLocal { isLocal.toggle() }
+                        }) {
+                            Image(systemName: checkingLocal(fileName: link).isLocal ? "externaldrive.fill.badge.checkmark" : "cloud.fill").font(.title3)
+                        }
+                    }
+                })
                 //  .navigationBarHidden(true)
             }
             .opacity(isHidden ? 0 : 1)
@@ -169,6 +199,33 @@ struct FeedDetailView: View {
         //  .edgesIgnoringSafeArea(.top)
         //  }
         //  .navigationViewStyle(StackNavigationViewStyle())
+    }
+}
+
+struct WebViewT : UIViewRepresentable {
+    
+    let request: URLRequest
+    
+    func makeUIView(context: Context) -> WKWebView  {
+        return WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(request)
+    }
+}
+
+struct WebViewF : UIViewRepresentable {
+    
+    let request: URL
+    let request2: URL
+    
+    func makeUIView(context: Context) -> WKWebView  {
+        return WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.loadFileURL(request, allowingReadAccessTo: request2)
     }
 }
 

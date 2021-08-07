@@ -33,17 +33,24 @@ func readArticleFromFile(fileName: String) -> String {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
-            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/chunk-vendors.4e008149.css">
-            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/app.6d127f20.css">
-                    </head>
-                    <body>
-                    <div class="tm-layout__wrapper tm-fira-loaded">
-                    <div class="tm-layout">
-                    <main class="tm-layout__container">
-                    <div class="tm-page__wrapper">
-                    <div class="tm-page-article__body">
-                    <article class="tm-page-article__content tm-page-article__content_inner">
-                    <div class="
+            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/chunk-vendors.027064e3.css">
+            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/app.f0824a93.css">
+            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/page-article.69cb8646.css">
+            <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/beta-test~megaprojects~page-article~page-article-comments~page-company~page-flow~page-flows~page-hub~c055b6ea.f054428d.css">
+        </head>
+        <body>
+            <div id="app" data-async-called="true">
+            <div class="tm-layout__wrapper tm-fira-loaded">
+            <div class="tm-layout"><main class="tm-layout__container">
+            <div data-async-called="true" class="tm-page">
+            <div class="tm-page-width"><div class="tm-page__wrapper">
+            <div class="tm-page__main tm-page__main_has-sidebar">
+            <div class="pull-down"><div class="tm-page-article__body">
+            <article class="tm-page-article__content tm-page-article__content_inner">
+            <div lang="ru" class="tm-article-body">
+            <div id="post-content-body" class="article-formatted-body article-formatted-body_version-2">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                            <div class="
         """
     let fileNameFinal = fileName.replacingOccurrences(of: "/", with: "-")
     let url = getDocumentsDirectory().appendingPathComponent(fileNameFinal)

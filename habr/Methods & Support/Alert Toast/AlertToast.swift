@@ -1,3 +1,13 @@
+//MIT License
+//
+//Copyright (c) 2021 Elai Zuberman
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import SwiftUI
 import Combine
 
@@ -28,7 +38,7 @@ fileprivate struct AnimatedCheckmark: View {
         }
         .trim(from: 0, to: percentage)
         .stroke(color, style: StrokeStyle(lineWidth: CGFloat(size / 8), lineCap: .round, lineJoin: .round))
-        .animation(Animation.spring().speed(0.75).delay(0.25))
+        .animation(Animation.spring().speed(0.75).delay(0.25), value: percentage)
         .onAppear {
             percentage = 1.0
         }
@@ -68,7 +78,7 @@ fileprivate struct AnimatedXmark: View {
         }
         .trim(from: 0, to: percentage)
         .stroke(color, style: StrokeStyle(lineWidth: CGFloat(size / 8), lineCap: .round, lineJoin: .round))
-        .animation(Animation.spring().speed(0.75).delay(0.25))
+        .animation(Animation.spring().speed(0.75).delay(0.25), value: percentage)
         .onAppear {
             percentage = 1.0
         }
@@ -76,8 +86,14 @@ fileprivate struct AnimatedXmark: View {
     }
 }
 
+//MARK: - Main View
+
 @available(iOS 13, macOS 11, *)
 public struct AlertToast: View{
+    
+    public enum BannerAnimation{
+        case slide, pop
+    }
     
     /// Determine how the alert will be display
     public enum DisplayMode: Equatable{
@@ -87,6 +103,9 @@ public struct AlertToast: View{
         
         ///Drop from the top of the screen
         case hud
+        
+        ///Banner from the bottom of the view
+        case banner(_ transition: BannerAnimation)
     }
     
     /// Determine what the alert will display
@@ -201,6 +220,52 @@ public struct AlertToast: View{
         self.displayMode = displayMode
         self.type = type
         self.title = title
+    }
+    
+    ///Banner from the bottom of the view
+    public var banner: some View{
+        VStack{
+            Spacer()
+            
+            //Banner view starts here
+            VStack(alignment: .leading, spacing: 10){
+                HStack{
+                    switch type{
+                    case .complete(let color):
+                        Image(systemName: "checkmark")
+                            .foregroundColor(color)
+                    case .error(let color):
+                        Image(systemName: "xmark")
+                            .foregroundColor(color)
+                    case .systemImage(let name, let color):
+                        Image(systemName: name)
+                            .foregroundColor(color)
+                    case .image(let name, let color):
+                        Image(name)
+                            .foregroundColor(color)
+                    case .loading:
+                        ActivityIndicator()
+                    case .regular:
+                        EmptyView()
+                    }
+                    
+                    Text(LocalizedStringKey(title ?? ""))
+                        .font(custom?.titleFont ?? Font.headline.bold())
+                }
+                
+                if subTitle != nil{
+                    Text(LocalizedStringKey(subTitle!))
+                        .font(custom?.titleFont ?? Font.subheadline)
+                }
+            }
+            .multilineTextAlignment(.leading)
+            .textColor(custom?.titleColor ?? nil)
+            .padding()
+            .frame(maxWidth: 400, alignment: .leading)
+            .alertBackground(custom?.backgroundColor ?? nil)
+            .cornerRadius(10)
+            .padding([.horizontal, .bottom])
+        }
     }
     
     ///HUD View
@@ -326,6 +391,8 @@ public struct AlertToast: View{
             alert
         case .hud:
             hud
+        case .banner:
+            banner
         }
     }
 }
@@ -342,14 +409,19 @@ public struct AlertToastModifier: ViewModifier{
     ///Tap to dismiss alert
     @State var tapToDismiss: Bool = true
     
+    var offsetY: CGFloat = 0
+    
     ///Init `AlertToast` View
     var alert: () -> AlertToast
     
     ///Completion block returns `true` after dismiss
-    var completion: ((Bool) -> ())? = nil
+    var onTap: (() -> ())? = nil
+    var completion: (() -> ())? = nil
     
     @State private var hostRect: CGRect = .zero
     @State private var alertRect: CGRect = .zero
+    
+    @State private var workItem: DispatchWorkItem?
     
     private var screen: CGRect {
         #if os(iOS)
@@ -361,9 +433,9 @@ public struct AlertToastModifier: ViewModifier{
     
     private var offset: CGFloat{
         #if os(iOS)
-        return -hostRect.midY + alertRect.height
+        return (-hostRect.midY + alertRect.height) + offsetY
         #else
-        return (-hostRect.midY + screen.midY) + alertRect.height
+        return (-hostRect.midY + screen.midY) + alertRect.height + offsetY
         #endif
     }
     
@@ -375,6 +447,7 @@ public struct AlertToastModifier: ViewModifier{
             case .alert:
                 alert()
                     .onTapGesture {
+                        onTap?()
                         if tapToDismiss{
                             withAnimation(Animation.spring()){
                                 isPresenting = false
@@ -382,7 +455,7 @@ public struct AlertToastModifier: ViewModifier{
                         }
                     }
                     .onDisappear(perform: {
-                        completion?(true)
+                        completion?()
                     })
                     .transition(AnyTransition.scale(scale: 0.8).combined(with: .opacity))
             case .hud:
@@ -403,6 +476,7 @@ public struct AlertToastModifier: ViewModifier{
                     )
                     
                     .onTapGesture {
+                        onTap?()
                         if tapToDismiss{
                             withAnimation(Animation.spring()){
                                 isPresenting = false
@@ -410,42 +484,71 @@ public struct AlertToastModifier: ViewModifier{
                         }
                     }
                     .onDisappear(perform: {
-                        completion?(true)
+                        completion?()
                     })
                     .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+            case .banner:
+                alert()
+                    .onTapGesture {
+                        onTap?()
+                        if tapToDismiss{
+                            withAnimation(Animation.spring()){
+                                isPresenting = false
+                            }
+                        }
+                    }
+                    .onDisappear(perform: {
+                        completion?()
+                    })
+                    .transition(alert().displayMode == .banner(.slide) ? AnyTransition.slide.combined(with: .opacity) : AnyTransition.move(edge: .bottom))
             }
+            
         }
     }
     
     @ViewBuilder
     public func body(content: Content) -> some View {
-        content
-            .overlay(
-                GeometryReader{ geo -> AnyView in
-                    let rect = geo.frame(in: .global)
-                    
-                    if rect.integral != hostRect.integral{
-                        DispatchQueue.main.async {
-                            self.hostRect = rect
-                        }
-                    }
-                    
-                    return AnyView(EmptyView())
-                }
+        switch alert().displayMode{
+        case .banner:
+            content
                 .overlay(ZStack{
                     main()
+                }
+                .animation(Animation.spring(), value: isPresenting)
+                )
+                .valueChanged(value: isPresenting, onChange: { (presented) in
+                    if presented{
+                        onAppearAction()
+                    }
+                })
+        default:
+            content
+                .overlay(
+                    GeometryReader{ geo -> AnyView in
+                        let rect = geo.frame(in: .global)
                         
-                }
-                .frame(maxWidth: .infinity, maxHeight: alert().displayMode == .alert ? .infinity : -hostRect.midY / 2, alignment: .center)
-                .offset(x: 0, y: alert().displayMode == .alert ? 0 : offset)
-                .edgesIgnoringSafeArea(alert().displayMode == .alert ? .all : .bottom)
-                .animation(Animation.spring()))
-            )
-            .valueChanged(value: isPresenting, onChange: { (presented) in
-                if presented{
-                    onAppearAction()
-                }
-            })
+                        if rect.integral != hostRect.integral{
+                            DispatchQueue.main.async {
+                                self.hostRect = rect
+                            }
+                        }
+                        
+                        return AnyView(EmptyView())
+                    }
+                    .overlay(ZStack{
+                        main()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: alert().displayMode == .alert ? .infinity : -hostRect.midY / 2, alignment: .center)
+                    .offset(x: 0, y: alert().displayMode == .alert ? 0 : offset)
+                    .edgesIgnoringSafeArea(alert().displayMode == .alert ? .all : .bottom)
+                    .animation(Animation.spring(), value: isPresenting))
+                )
+                .valueChanged(value: isPresenting, onChange: { (presented) in
+                    if presented{
+                        onAppearAction()
+                    }
+                })
+        }
         
     }
     
@@ -456,11 +559,15 @@ public struct AlertToastModifier: ViewModifier{
         }
         
         if duration > 0{
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            workItem?.cancel()
+            
+            let task = DispatchWorkItem {
                 withAnimation(Animation.spring()){
                     isPresenting = false
                 }
             }
+            workItem = task
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: task)
         }
     }
 }
@@ -548,8 +655,8 @@ public extension View{
     ///   - show: Binding<Bool>
     ///   - alert: () -> AlertToast
     /// - Returns: `AlertToast`
-    func toast(isPresenting: Binding<Bool>, duration: Double = 2, tapToDismiss: Bool = true, alert: @escaping () -> AlertToast, completion: ((Bool) -> ())? = nil) -> some View{
-        modifier(AlertToastModifier(isPresenting: isPresenting, duration: duration, tapToDismiss: tapToDismiss, alert: alert, completion: completion))
+    func toast(isPresenting: Binding<Bool>, duration: Double = 2, tapToDismiss: Bool = true, offsetY: CGFloat = 0, alert: @escaping () -> AlertToast, onTap: (() -> ())? = nil, completion: (() -> ())? = nil) -> some View{
+        modifier(AlertToastModifier(isPresenting: isPresenting, duration: duration, tapToDismiss: tapToDismiss, offsetY: offsetY, alert: alert, onTap: onTap, completion: completion))
     }
     
     /// Choose the alert background
@@ -566,7 +673,7 @@ public extension View{
         modifier(TextForegroundModifier(color: color))
     }
     
-    @ViewBuilder func valueChanged<T: Equatable>(value: T, onChange: @escaping (T) -> Void) -> some View {
+    @ViewBuilder fileprivate func valueChanged<T: Equatable>(value: T, onChange: @escaping (T) -> Void) -> some View {
         if #available(iOS 14.0, *) {
             self.onChange(of: value, perform: onChange)
         } else {

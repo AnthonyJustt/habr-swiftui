@@ -19,7 +19,7 @@ struct SearchView: View {
 //            isHidden.toggle()
 //            isHidden_.toggle()
             farray.removeAll()
-            searchString = "https://m.habr.com/ru/search/?q=" + searchString
+            searchString = "https://habr.com/ru/search/?q=" + searchString + "&target_type=posts&order=relevance"
             print(searchString)
             farray = fparse(fhtml: fname(furl: searchString))
             searchTextNothing = "Ничего не найдено"
@@ -31,8 +31,8 @@ struct SearchView: View {
         searchString = ""
     }
     
-    @State private var selectedMenuItem = "Публикации"
-    var menuItems: [String] = ["Публикации", "Хабы и компании", "Пользователи", "Комментарии"]
+    @State private var selectedMenuItem = "Search.byPosts"
+    var menuItems: [String] = ["Search.byPosts", "Search.byHubs", "Search.byUsers", "Search.byComments"]
     
 //    @State var isHidden: Bool = true
 //    @State var isHidden_: Bool = true
@@ -58,7 +58,7 @@ struct SearchView: View {
                     }
                 }
 //                .opacity(isHidden_ ? 0 : 1)
-                .navigationTitle("Habr  —  Поиск")
+                .navigationTitle(LocalizedStringKey("Search.Title"))
                 .navigationBarItems(trailing:
                                         Menu {
                                             ForEach(menuItems, id: \.self) {
@@ -68,10 +68,10 @@ struct SearchView: View {
                                                 }, label: {
                                                     if selectedMenuItem == index{
                                                         HStack {
-                                                            Text(index)
+                                                            Text(LocalizedStringKey(index))
                                                             Image(systemName: "checkmark")
                                                         }} else {
-                                                            Text(index)
+                                                            Text(LocalizedStringKey(index))
                                                         }
                                                 })
                                             }

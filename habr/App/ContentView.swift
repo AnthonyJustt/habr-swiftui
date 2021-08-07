@@ -20,36 +20,36 @@ struct ContentView: View {
         //   ZStack {
         TabView(selection: $tabSelection) {
             NavigationView {
-                FeedView(farray: [], fNewsArray: [], viewName: "Habr  —  Лента", showingNews: true, httpsAddress: "https://m.habr.com/ru/all/", tabSelection: $tabSelection)
+                FeedView(farray: [], fNewsArray: [], viewName: "Content.FeedTitle", showingNews: true, httpsAddress: "https://m.habr.com/ru/all/", tabSelection: $tabSelection)
             } .tabItem {
                 Image(systemName: "house")
-                Text("Лента")
+                Text(LocalizedStringKey("Content.Feed"))
             }.tag(0)
             
             ReadingListView()
                 .tabItem {
                     Image(systemName: "eyeglasses")
-                    Text("Чтение")
+                    Text(LocalizedStringKey("Content.ReadingList"))
                 }.tag(1)
             
             SearchView(farray: [])
                 .tabItem {
                     Image(systemName: "magnifyingglass")
-                    Text("Поиск")
+                    Text(LocalizedStringKey("Content.Search"))
                 }.tag(2)
             
             NavigationView {
-                FeedView(farray: [], fNewsArray: [], viewName: "Habr  —  Новости", showingNews: false, httpsAddress: "https://m.habr.com/ru/news/", tabSelection: $tabSelection)
+                FeedView(farray: [], fNewsArray: [], viewName: "Content.NewsTitle", showingNews: false, httpsAddress: "https://m.habr.com/ru/news/", tabSelection: $tabSelection)
             }
             .tabItem {
                 Image(systemName: "newspaper")
-                Text("Новости")
+                Text(LocalizedStringKey("Content.News"))
             }.tag(3)
             
             moreView()
                 .tabItem {
                     Image(systemName: "square.grid.3x2.fill")
-                    Text("Больше")
+                    Text(LocalizedStringKey("Content.More"))
                 }  .tag(4)
         }
         //                Text("ggg").bold()
