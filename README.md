@@ -49,6 +49,6 @@ by <a href="https://www.youtube.com/watch?v=LbpGjAJRhLM" target="_blank">kavsoft
 
 <br>Comments
 <p float="left">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/comments.png" height="500 /">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/comments-dark.png" height="500" />
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/comments-sheets.png" height="500 /">
+  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/comments-sheets-dark.png" height="500" />
 </p>
