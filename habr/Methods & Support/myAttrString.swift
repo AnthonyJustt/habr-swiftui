@@ -21,19 +21,26 @@ func comment2Text(paragraph: String) -> some View {
     str = str.replacingOccurrences(of: "</p><p>", with: "\n")
     str = str.replacingOccurrences(of: "<p>", with: "")
     str = str.replacingOccurrences(of: "</p>", with: "")
+    str = str.replacingOccurrences(of: "</a>", with: "</ahref>")
     str = str.replacingOccurrences(of: "<div xmlns=\"http://www.w3.org/1999/xhtml\">", with: "")
-    str.removeFirst()
+     str.removeFirst()
     str.removeLast()
     str.removeLast()
     str.removeLast()
     str.removeLast()
     str.removeLast()
     str.removeLast()
-    str.removeLast()
+       str.removeLast()
     
     //  str = ""
     
-    let words = str.components(separatedBy: ["<code>", "<blockquote>", "ode>", "ockquote>", "<figure>", "gure>"])
+    // <code> - ode>
+    // <blockquote> - ockquote>
+    // <figure> - gure>
+    // <details - tails>
+    // <a href= - ref>
+    
+    let words = str.components(separatedBy: ["<code>", "<blockquote>", "ode>", "ockquote>", "<figure>", "gure>", "<details", "tails>", "<a href=", "ref>"])
     
     //    for word in words {
     //        print(word)
@@ -60,7 +67,7 @@ func comment2Text(paragraph: String) -> some View {
     //    }
     
     var resultView: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ForEach(words.indices, id: \.self) { index in
                 if (words[index].count > 0) && (words[index] != " ") {
                     switch words[index] {
@@ -73,11 +80,11 @@ func comment2Text(paragraph: String) -> some View {
                             .padding(.vertical, 5)
                             .background(
                                 Rectangle()
-                                    .fill(Color.pink)
-                                    .opacity(0.05)
+                                    .fill(Color("AccentColor"))
+                                    .opacity(0.1)
                                     .overlay(
                                         Rectangle()
-                                            .stroke(Color.red)
+                                            .stroke(Color("AccentColor"), lineWidth: 2)
                                     )
                             )
                             .lineLimit(nil)
@@ -86,17 +93,35 @@ func comment2Text(paragraph: String) -> some View {
                         // BLOCKQUOTE
                     case _ where words[index].contains("</bl"):
                         HStack {
-                            Rectangle().fill(Color.green).frame(width: 2)
+                            Rectangle().fill(Color("AccentColor")).frame(width: 3)
                             Text(cleaning(s: words[index]))
                                 .lineLimit(nil)
                                 .multilineTextAlignment(.leading)
                         }
                         .fixedSize(horizontal: false, vertical: true)
-                     //   .padding()
+                        //   .padding()
                         
                         // IMAGE
                     case _ where words[index].contains("</fi"):
                         Text("img")
+                        
+                        // LINK
+                    case _ where words[index].contains("</ah"):
+                        HStack {
+                          //  Text(words[index])
+                            Link(linking(s: words[index]), destination: (URL(string: "m.habr.com") ?? URL(string: "https://m.habr.com"))!)
+                                Image(systemName: "arrow.up.right.square")
+                        }
+                        
+                        // SPOILER
+                    case _ where words[index].contains("</de"):
+                        GroupBox () {
+                            DisclosureGroup(spoilering(s: words[index])) {
+                                VStack {
+                                    Text(words[index])
+                                }
+                            }.foregroundColor(Color("FeedListFont"))
+                        }
                         
                         
                     default:
@@ -116,8 +141,8 @@ func cleaning(s:String) -> String {
     var returnS: String
     returnS = ""
     returnS = s.replacingOccurrences(of: "</bl", with: "")
-
-    returnS.removeFirst()
+    
+    // returnS.removeFirst()
     returnS.removeLast()
     returnS.removeLast()
     
@@ -126,19 +151,19 @@ func cleaning(s:String) -> String {
         returnS.removeFirst()
         print("removed")
     }
+    //
+//    let index2 = returnS.index(returnS.startIndex, offsetBy: 1)
+//    if returnS[index2] == " " {
+//        returnS.removeFirst()
+//        print("removed")
+//    }
+//    //
+//    let index3 = returnS.index(returnS.startIndex, offsetBy: 1)
+//    if returnS[index3] == " " {
+//        returnS.removeFirst()
+//        print("removed")
+//    }
     
-    let index2 = returnS.index(returnS.startIndex, offsetBy: 1)
-    if returnS[index2] == " " {
-        returnS.removeFirst()
-        print("removed")
-    }
-    
-    let index3 = returnS.index(returnS.startIndex, offsetBy: 1)
-    if returnS[index3] == " " {
-        returnS.removeFirst()
-        print("removed")
-    }
-
     print(returnS)
     return returnS
 }
@@ -147,18 +172,48 @@ func cleaning2(s:String) -> String {
     var returnS: String
     returnS = ""
     returnS = s
-    returnS.removeFirst()
+    // returnS.removeFirst()
     
-//    let index = returnS.index(returnS.startIndex, offsetBy: 1)
-//    if returnS[index] == " " {
-//        returnS.removeFirst()
-//    }
-//    
-//    let index2 = returnS.index(returnS.startIndex, offsetBy: 1)
-//    if returnS[index2] == " " {
-//        returnS.removeFirst()
-//    }
+    //    let index = returnS.index(returnS.startIndex, offsetBy: 1)
+    //    if returnS[index] == " " {
+    //        returnS.removeFirst()
+    //    }
+    //
+    //    let index2 = returnS.index(returnS.startIndex, offsetBy: 1)
+    //    if returnS[index2] == " " {
+    //        returnS.removeFirst()
+    //    }
+    
+    return returnS
+}
 
+func spoilering(s:String) -> String {
+    var returnS: String
+    returnS = ""
+    returnS = s
+    
+//    let words = s.components(separatedBy: ["<summary>", "</summary>"])
+//    returnS = words[1]
+    
+    if (returnS == "") || (returnS == " ") {
+        returnS = "spoiler"
+    }
+    
+    return returnS
+}
+
+func linking(s:String) -> String {
+    var returnS: String
+    returnS = ""
+    returnS = s
+    
+    let words = s.components(separatedBy: ["\">", "</ah"])
+    returnS = words[1]
+    
+    if (returnS == "") || (returnS == " ") {
+        returnS = "link"
+    }
+    
     return returnS
 }
 
@@ -176,6 +231,7 @@ extension String {
 
 struct myAttrString_Previews: PreviewProvider {
     static var previews: some View {
-        myAttrString(paragraph: "<blockquote>Пазл с минимальной поддерживаемой iOS 15, кажется, сложился</blockquote>Да как-то не особо. Ничего не мешало этот тред пул поставлять как библиотеку для старых iOS. Можно посмотреть на C#, где подобная практика повсеместна. Это ведь всего лишь тред пул, которому явно ничего хитрого не надо от самой iOS. <br>Выглядит все прям под копирку с C#. <code>.font(.system(.body, design: .monospaced))<br>.padding(.horizontal, 10)<br>.padding(.vertical, 5)</code>Особенно с этими всеми контекстами и тасками. Не сказать, что рад видеть очередные асинки, но наверное лучше, чем ничего. И в этом плане более интересны как раз акторы.<br><br>Там свифт пытается быть безопасными наподобие раста.<figure><img src=\"https://habr.com/img.png\"></figure>Text<br>Text</div>")
+        myAttrString(paragraph: "1234567890<blockquote>Пазл с  поддерживаемой iOS 15, кажется, сложился</blockquote>Да как-то не особо. Ничего не мешало этот тред пул поставлять как библиотеку для старых iOS.<br>Выглядит все прям под копирку с C#. <code>.font(.system(.body, design: .monospaced))<br>.padding(.horizontal, 10)<br>.padding(.vertical, 5)</code>Особенно с этими всеми контекстами и тасками. <br><br>Там свифт пытается быть безопасными наподобие раста.<figure><img src=\"https://habr.com/img.png\"></figure>Text<br>Text<details class=\"spoiler\"><summary>Хорошо показал себя зимой</summary>Текст спойлера</details><a href=\"https://habr.com/ru/company/madrobots/profile/\" rel=\"noopener noreferrer nofollow\">Madrobots</a></div>")
+            .padding()
     }
 }

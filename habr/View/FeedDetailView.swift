@@ -128,28 +128,9 @@ struct FeedDetailView: View {
                     //                    WebViewF(request: indexFileUrl, request2: documentDirUrl)
                     //                        .frame(height: 500)
                     
-                    
-                    
-                    
-                    
-                    VStack(alignment: .leading) {
-                        Text("Хабы: ").bold()
-                        ForEach(hubArray, id: \.id) {
-                            item in tagView(title: item.title)
-                        }
-                        Text("Теги: ").bold()
-                        ForEach(tagArray, id: \.id) {
-                            item in tagView(title: item.title)
-                        }
-                        Divider()
-                        ForEach(labelArray, id: \.id) {
-                            item in labelView(title: item.title)
-                        }
-                        ForEach(originalArray, id: \.id) {
-                            item in buttonOriginalView(author: item.title)
-                        }
-                    }
-                    .padding()
+
+                        DisclosureView(hubArray: hubArray, tagArray: tagArray, labelArray: labelArray, originalArray: originalArray)
+                        .padding()
                     
                     NavigationLink (destination: CommentsView(farray: [commentsItem(
                         content: "content_",

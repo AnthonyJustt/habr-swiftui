@@ -9,7 +9,8 @@ import SwiftUI
 
 struct EmbedNewsView: View {
     
-    @State var farrayNews: [FeedNewsItem] = [FeedNewsItem(title: "Заголовок_", date: "00:00_", comments: "Комментарии: 12 +10", link: "")]
+    @Binding var farrayNews: [FeedNewsItem]
+//    = [FeedNewsItem(title: "Заголовок_", date: "00:00_", comments: "Комментарии: 12 +10", link: "")]
     
     @Binding var tabSelection: Int
     
@@ -40,7 +41,7 @@ struct EmbedNewsView: View {
             }
                 VStack {
                     HStack {
-                        Text("Больше новостей ")
+                        Text(LocalizedStringKey("EmbedNew.MoreNews"))
                         Image(systemName: "arrow.right.circle")
                         
                     }
@@ -60,11 +61,11 @@ struct EmbedNewsView: View {
     }
 }
 
-struct EmbedNewsView_Previews: PreviewProvider {
-    @State static var previewTabSelection = 3
-    static var previews: some View {
-        EmbedNewsView(tabSelection: $previewTabSelection)
-            .previewLayout(.fixed(width: 400, height: 200))
-            .padding()
-    }
-}
+//struct EmbedNewsView_Previews: PreviewProvider {
+//    @State static var previewTabSelection = 3
+//    static var previews: some View {
+//        EmbedNewsView(tabSelection: $previewTabSelection)
+//            .previewLayout(.fixed(width: 400, height: 200))
+//            .padding()
+//    }
+//}

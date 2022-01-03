@@ -96,6 +96,8 @@ func fparseNews(fhtml: String) -> Array<FeedNewsItem> {
     
     // парсим новости с первой страницы хабра для главного экрана приложения
     
+    print(fhtml)
+    
     var arrayToReturn: [FeedNewsItem] = []
     do {
         let html: String = fhtml;
@@ -190,7 +192,7 @@ func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArr
         var indentNumber: String
         
         let doc: Document = try SwiftSoup.parse(html)
-        let link: Element = try doc.select("span.tm-comments-wrapper__comments-count").first()!
+        let link: Element = try doc.select("span.tm-article-comments-counter-link__value").first()!
         numberOfC = try link.text();
         
         let els4: Elements = try SwiftSoup.parse(html).select("div.tm-comment__body-content") // текст комментария
@@ -210,7 +212,7 @@ func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArr
                 author_link: try els6[i].attr("href"),
                 date: try els5[i].text(),
                 link: try els5[i].attr("href"),
-                rate: try els7[i].text()
+                rate: try els7[i + 1].text()
             ))
         }
         print("fparseComments: content was successfully parsed")

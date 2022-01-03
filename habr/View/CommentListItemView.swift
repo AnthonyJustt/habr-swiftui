@@ -13,6 +13,8 @@ struct commentListItemView: View {
     @State private var showingActionSheet = false
     @State private var isShowingAuthor: Bool = false
     
+    @Binding var toggleBottom: Bool
+    
     func str(s: String) -> Bool {
         if s.contains("Комментарий был изменен") {
             return true
@@ -69,15 +71,15 @@ struct commentListItemView: View {
                     }
                 }
                 if (Int(commentsListItem.rate) ?? 0) < 0 {
-//                    Text(commentsListItem.content)
-//                        .multilineTextAlignment(.leading)
-//                        .foregroundColor(.gray)
+                    //                    Text(commentsListItem.content)
+                    //                        .multilineTextAlignment(.leading)
+                    //                        .foregroundColor(.gray)
                     myAttrString(paragraph: commentsListItem.content)
                         .foregroundColor(.gray)
                 } else {
-//                    Text(commentsListItem.content)
-//                        .multilineTextAlignment(.leading)
-//                        .foregroundColor(Color("FeedListFont"))
+                    //                    Text(commentsListItem.content)
+                    //                        .multilineTextAlignment(.leading)
+                    //                        .foregroundColor(Color("FeedListFont"))
                     myAttrString(paragraph: commentsListItem.content)
                         .foregroundColor(Color("FeedListFont"))
                 }
@@ -104,18 +106,22 @@ struct commentListItemView: View {
             }
         }
         .onTapGesture {
-            showingActionSheet = true
+            // showingActionSheet = true
+            withAnimation {
+                toggleBottom = true
+            }
         }
-        .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("Комментарий"), buttons: [
-                .default(Text("html")) {  },
-                .default(Text("Скопировать ссылку на комментарий")) { pasteboard.string = "https://m.habr.com" },
-                .default(Text("Открыть комментарий в браузере")) { UIApplication.shared.open(URL(string: "https://m.habr.com")!) },
-                .default(Text("Скопировать ссылку на автора")) {  },
-                .default(Text("Открыть профиль автора в браузере")) {  },
-                .cancel()
-            ])
-        }
+        .ignoresSafeArea(.container, edges: .bottom)
+        //        .actionSheet(isPresented: $showingActionSheet) {
+        //            ActionSheet(title: Text("Комментарий"), buttons: [
+        //                .default(Text("html")) {  },
+        //                .default(Text("Скопировать ссылку на комментарий")) { pasteboard.string = "https://m.habr.com" },
+        //                .default(Text("Открыть комментарий в браузере")) { UIApplication.shared.open(URL(string: "https://m.habr.com")!) },
+        //                .default(Text("Скопировать ссылку на автора")) {  },
+        //                .default(Text("Открыть профиль автора в браузере")) {  },
+        //                .cancel()
+        //            ])
+        //        }
     }
 }
 
@@ -129,8 +135,10 @@ struct commentListItemView_Previews: PreviewProvider {
         link: "comment-link_",
         rate: "44"
     )]
+    
+    @State static var tb: Bool = false
     static var previews: some View {
-        commentListItemView(commentsListItem: cli[0])
+        commentListItemView(commentsListItem: cli[0], toggleBottom: $tb)
             .previewLayout(.sizeThatFits)
             .padding()
     }

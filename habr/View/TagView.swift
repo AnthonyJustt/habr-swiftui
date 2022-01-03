@@ -10,18 +10,26 @@ import SwiftUI
 struct tagView: View {
     var title: String
     var body: some View {
-        Text(title)
-            .foregroundColor(Color("FeedListFont"))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                    Capsule()
-                    .fill(Color("FeedListItem"))
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("AccentColor"))
-                    )
-            )
+//        Text(title)
+//            .foregroundColor(Color("FeedListFont"))
+//            .padding(.horizontal, 10)
+//            .padding(.vertical, 5)
+//            .background(
+//                    Capsule()
+//                    .fill(Color("FeedListItem"))
+//                    .overlay(
+//                        Capsule()
+//                            .stroke(Color("AccentColor"))
+//                    )
+//            )
+        VStack {
+            HStack {
+                Text(title)
+                Spacer()
+                Image(systemName: "chevron.right")
+            }
+            Divider()
+        }
     }
 }
 

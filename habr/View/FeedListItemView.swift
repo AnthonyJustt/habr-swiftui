@@ -59,7 +59,7 @@ struct FeedListItemView: View {
         ZStack {
             
             // swipe
-            swipeVisible ? Color.green : Color("FeedListItem")
+            swipeVisible ? Color("AccentColor") : Color("FeedListItem")
             HStack{
                 Spacer()
                 Button(action: {
@@ -162,28 +162,28 @@ struct FeedListItemView: View {
             //  preferredContentSize: .init(width: 300, height: 150),
             actions: {[
                 PreviewContextAction(
-                    title: "Скопировать ссылку",
+                    title: "FeedListItem.CopyLink",
                     systemImage: "doc.on.doc",
                     action: {
                         print("Скопировать ссылку")
                         pasteboard.string = "https://m.habr.com\(feedListItem.link)"
                     }),
                 PreviewContextAction(
-                    title: "Открыть в браузере",
+                    title: "FeedListItem.OpenBrowser",
                     systemImage: "safari",
                     action: {
                         print("Открыть в браузере")
                         UIApplication.shared.open(URL(string: "https://m.habr.com\(feedListItem.link)")!)
                     }),
                 PreviewContextAction(
-                    title: "Открыть комментарии в браузере",
+                    title: "FeedListItem.OpenComments",
                     systemImage: "safari",
                     action: {
                         print("Открыть комментарии в браузере")
                         UIApplication.shared.open(URL(string: "https://m.habr.com\(feedListItem.link)comments")!)
                     }),
                 PreviewContextAction(
-                    title: "Добавить в список чтения",
+                    title: "FeedListItem.AddtoReading",
                     systemImage: "eyeglasses",
                     action: {
                         print("Добавить в список чтения")

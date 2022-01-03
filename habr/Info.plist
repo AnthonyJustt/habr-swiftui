@@ -60,6 +60,11 @@
 			<string>Reading List</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>Reading List</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key>type</key>
+                <string>static1</string>
+            </dict>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemType</key>
@@ -70,6 +75,11 @@
 			<string>News</string>
 			<key>UIApplicationShortcutItemSubtitle</key>
 			<string>News</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key>type</key>
+                <string>static2</string>
+            </dict>
 		</dict>
 	</array>
 </dict>

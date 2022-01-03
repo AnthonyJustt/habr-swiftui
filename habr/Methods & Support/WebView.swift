@@ -22,17 +22,55 @@ struct Webview : UIViewRepresentable {
         }
         
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            webView.evaluateJavaScript("""
-                document.getElementsByClassName('tm-feature')[0].remove();
-                document.getElementsByClassName('tm-header')[0].remove();
-                document.getElementsByClassName('tm-page__header')[0].remove();
-                document.getElementsByClassName('pull-down__header')[0].remove();
-                document.getElementsByClassName('tm-page-article__head-wrapper')[0].remove();
-                document.getElementsByClassName('tm-article-body__tags')[0].remove();
-                document.getElementsByClassName('tm-article__icons-wrapper')[0].remove();
-                document.getElementsByClassName('tm-page-article__additional-blocks')[0].remove();
-                document.getElementsByClassName('tm-footer')[0].remove();
-                """, completionHandler: nil)
+            
+            var toRemove = "var myobj = document.getElementsByClassName(\"tm-feature\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+             toRemove = "var myobj = document.getElementsByClassName(\"tm-header\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-page__header\"); myobj[0].remove();"
+           webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"pull-down__header\"); myobj[0].remove();"
+           webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-page-article__head-wrapper\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-article-body__tags\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-article-body__tags\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-article__icons-wrapper\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-page-article__additional-blocks\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+
+            toRemove = "var myobj = document.getElementsByClassName(\"tm-footer\"); myobj[0].remove();"
+            webView.evaluateJavaScript(toRemove, completionHandler: nil)
+            
+            
+            
+//            webView.evaluateJavaScript("""
+//                document.getElementsByClassName('tm-feature')[0].remove();
+//                document.getElementsByClassName('tm-header')[0].remove();
+//                document.getElementsByClassName('tm-page__header')[0].remove();
+//                document.getElementsByClassName('pull-down__header')[0].remove();
+//                document.getElementsByClassName('tm-page-article__head-wrapper')[0].remove();
+//                document.getElementsByClassName('tm-article-body__tags')[0].remove();
+//                document.getElementsByClassName('tm-article__icons-wrapper')[0].remove();
+//                document.getElementsByClassName('tm-page-article__additional-blocks')[0].remove();
+//                document.getElementsByClassName('tm-footer')[0].remove();
+//                """, completionHandler: { (h, error) in
+//                                           DispatchQueue.main.async {
+//                    print("yes")
+//                }
+//                }
+//            )
             
             webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
                 DispatchQueue.main.async {

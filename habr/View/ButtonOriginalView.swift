@@ -24,7 +24,7 @@ struct buttonOriginalView: View {
         GroupBox {
             HStack {
                 Image(systemName: "globe")
-                Text("Автор")
+                Text(LocalizedStringKey("ButtonOriginal"))
                 Spacer()
                 Link(str(s: author), destination: (URL(string: "m.habr.com") ?? URL(string: "https://m.habr.com"))!)
                 Group {

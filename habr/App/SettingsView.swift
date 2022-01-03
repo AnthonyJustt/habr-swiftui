@@ -11,6 +11,8 @@ struct SettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("isOnboarding") var isOnboarding: Bool = false
+    @State private var isNews: Bool = true
+    @State private var isReadingNow: Bool = false
     @State private var buttonCache = LocalizedStringKey("Calc.current.cache.size")
     @State private var buttonCacheSize: String = ""
     
@@ -34,25 +36,34 @@ struct SettingsView: View {
                 }
             }
             
+            Section(header: Text(LocalizedStringKey("Settings.Feed"))) {
+                Toggle(isOn: $isNews) {
+                    Text(LocalizedStringKey("Settengs.isNews"))
+                }
+                Toggle(isOn: $isReadingNow) {
+                    Text(LocalizedStringKey("Settings.isReadingNow"))
+                }
+            }
+            
             Section(header: Text(LocalizedStringKey("iPhone.Storage"))) {
                 HStack {
                     Button(action: {
-                            DispatchQueue.global(qos: .userInitiated).async {
-                                do {
-                                    
-                                    let size: Float = Float(try FileManager.default.allocatedSizeOfDirectory(at: getDocumentsDirectory())) / 1024 / 1024
-                                    print(String(format: "%.1f", size))
-                                    print(getDocumentsDirectory())
-                                    buttonCache = LocalizedStringKey("Cache.size.is")
-                                    buttonCacheSize = "\(String(format: "%.1f", size)) MB"
-                                    
-                                } catch {
-                                    print(error.localizedDescription)
-                                }
-                            }}, label: {
-                                Text(buttonCache)
-                                    .foregroundColor(.black)
-                            })
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            do {
+                                
+                                let size: Float = Float(try FileManager.default.allocatedSizeOfDirectory(at: getDocumentsDirectory())) / 1024 / 1024
+                                print(String(format: "%.1f", size))
+                                print(getDocumentsDirectory())
+                                buttonCache = LocalizedStringKey("Cache.size.is")
+                                buttonCacheSize = "\(String(format: "%.1f", size)) MB"
+                                
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+                        }}, label: {
+                            Text(buttonCache)
+                                .foregroundColor(.black)
+                        })
                     Spacer()
                     Text(buttonCacheSize)
                         .foregroundColor(.gray)

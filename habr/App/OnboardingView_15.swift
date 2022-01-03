@@ -206,12 +206,14 @@ struct GlassMorphicCard: View {
 
 struct blurView: UIViewRepresentable {
     
+    var cornerRadius: CGFloat = 0
+    
     func makeUIView(context: Context) -> UIVisualEffectView {
         UIVisualEffectView()
     }
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.layer.cornerRadius = 25
+        uiView.layer.cornerRadius = cornerRadius
         uiView.clipsToBounds = true
         
         let blurEffect = UIBlurEffect(style: .light)

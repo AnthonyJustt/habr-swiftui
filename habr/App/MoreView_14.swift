@@ -32,9 +32,8 @@ struct moreView: View {
                         SectionView(image: "gear", label: "More.Settings")
                     }
                     Spacer()
-                    NavigationLink(destination: EmptyView()) {
+                    NavigationLink(destination: AboutApp()) {
                     SectionView(image: "info.circle", label: "More.AboutApp")
-                    // not implemented yet
                     }
                     Spacer()
                 }

@@ -22,6 +22,9 @@
 "Post.ru" =  "Russian";
 "Post.en" = "English";
 "Post.all" = "English & Russian";
+"Settings.Feed" = "Feed";
+"Settengs.isNews" = "News";
+"Settings.isReadingNow" = "Reading Now";
 "Onboard.welcome" = "Welcome!";
 "Onboard.habr" = "Habr";
 "Onboard.getstarted" = "Get Started";
@@ -50,3 +53,17 @@
 "More.AboutHabr" = "About Habr";
 "More.Settings" = "Settings";
 "More.AboutApp" = "About App";
+"Disclosure.HubsTags" = "Hubs & Tags";
+"Disclosure.Hubs" = "Hubs";
+"Disclosure.Tags" = "Tags";
+"ButtonOriginal" = "Author";
+"CommentsButton" = "Comments";
+"FeedListItem.CopyLink" = "Copy link";
+"FeedListItem.OpenBrowser" = "Open in Browser";
+"FeedListItem.OpenComments" = "Open Comments in Browser";
+"FeedListItem.AddtoReading" = "Add to Reading List";
+"Comments.NoComments" = "There are no comments";
+"Comments.Comments" = "Comments - ";
+"Comments.Edited" = "Comments has been edited";
+"AboutHabr" = "On Habr ​intelligent ​people ​share ​their ​unique ​experience. ​It will be equally ​interesting ​for both ​programmers ​and ​journalists, ​administrators ​and ​advertisers, ​analysts ​and ​designers, ​senior ​and middle ​managers, ​large ​companies ​and ​startups ​owners, ​and also ​for all ​those ​who ​think ​that IT ​is not ​just ​two ​letters ​of the alphabet.\n\nThe project was invented by @deniskin in 2006. At first it was a modest Russian newsfeed but over 14 years it has developed into a massive blog platform with multimillion and multicultural audience and unique services.\nPeople post interesting content on different topics on Habr and leave comments. Here you can ask questions and get answers, discuss trending topics, search for a new job or freelance and directly communicate with major companies.\n\nEveryone ​is equal ​on Habr. ​This ​is an active ​self-regulating ​community ​that ​gives ​way ​only ​to a quality ​content: ​interesting ​posts ​gain ​upvotes ​and ​dozens ​of comments ​while ​poor ​content ​is usually ​downvoted ​and ​left ​without ​attention. ​Karma ​and ​rating ​help ​to keep ​the ​balance. ​Karma ​illustrates ​community ​attitude ​to a user, ​while ​rating ​shows ​a user’s ​contribution ​to the ​community.\nThose who post content on Habr can count on a keen interest from the community: original posts usually get thousands of views and dozens of comments.\nHabr team always supports the community and financially encourages authors for their posts, if they are highly appreciated by readers. The editorial office is ready to help with content creation, information search and events accreditation. All because content is king.\n\nYou ​also ​can ​find ​corporate ​blogs ​of well-known ​companies ​here. ​They ​share ​their ​knowledge ​and ​experience, ​and ​get ​the ​opinion ​on their ​products ​at first ​hand. ​And ​Habr ​users ​can ​ask ​them ​questions ​directly ​and ​get ​answers ​shortly. ";
+"EmbedNew.MoreNews" = "More News ";

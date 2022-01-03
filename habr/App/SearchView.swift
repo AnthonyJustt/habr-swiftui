@@ -14,6 +14,8 @@ struct SearchView: View {
     @State var showToast: Bool =  false
     @State var searchTextNothing: String = ""
     
+    @State var toggleOpacity: Bool = false
+    
     func search() {
         DispatchQueue.global(qos: .userInitiated).async {
 //            isHidden.toggle()
@@ -34,13 +36,25 @@ struct SearchView: View {
     @State private var selectedMenuItem = "Search.byPosts"
     var menuItems: [String] = ["Search.byPosts", "Search.byHubs", "Search.byUsers", "Search.byComments"]
     
+    @State private var selectedColorIndex = 0
+    
 //    @State var isHidden: Bool = true
 //    @State var isHidden_: Bool = true
     
     var body: some View {
         SearchNavigation(text: $searchString, search: search, cancel: cancel) {
+            
             ZStack {
                 ScrollView(.vertical, showsIndicators: true) {
+                    
+                    Picker("Favorite Color", selection: $selectedColorIndex, content: {
+                                    Text("Релевантные").tag(0)
+                                    Text("По времени").tag(1)
+                                    Text("По рейтингу").tag(2)
+                                })
+                                .pickerStyle(SegmentedPickerStyle())
+                                .padding(.horizontal)
+                    
                     LazyVStack(alignment: .center, spacing: 0) {
                         ForEach(farray.indices, id: \.self) { index in
                             NavigationLink (destination: FeedDetailView(
@@ -79,7 +93,11 @@ struct SearchView: View {
                                         label: {
                                             Label("", systemImage: "ellipsis.circle")
                                                 .font(.title2)
-                                    })
+                                    }
+                                        .onTapGesture {
+                    toggleOpacity.toggle()
+                }
+                )
            
 //                ProgressView()
 //                    .opacity(isHidden ? 0 : 1)
@@ -88,6 +106,14 @@ struct SearchView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        
+        .overlay(
+            blurView(cornerRadius: 0)
+                .opacity(toggleOpacity ? 0.5 : 0)
+                .onTapGesture{
+                    toggleOpacity.toggle()
+                }
+        )
     }
 }
 

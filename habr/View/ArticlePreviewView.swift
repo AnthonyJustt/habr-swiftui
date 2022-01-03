@@ -21,7 +21,7 @@ struct ArticlePreviewView: View {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
                 <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/chunk-vendors.4e008149.css">
-                <link rel="stylesheet" href="https://dr.habracdn.net/habr-web/css/app.6d127f20.css">
+                <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.60d4ef5b.css">
                 </head>
                 <body>
                 <div class="tm-layout__wrapper tm-fira-loaded">
@@ -33,10 +33,12 @@ struct ArticlePreviewView: View {
                 <div class="tm-article-body__content tm-article-body__content_formatted tm-article-body__content_formatted-v1">
                 """
     var body: some View {
-    //    WebView_(request: start2 + articlePreview + end)
+//        WebView_(request: start2 + articlePreview + end)
 
    //         Webview(dynamicHeight: $webViewHeight, linkwv: "", stringwv: start2 + articlePreview + end)
-        Text(articlePreview)
+        //Text(articlePreview)
+        
+        Text("text")
         
     }
     
@@ -44,13 +46,37 @@ struct ArticlePreviewView: View {
 
 struct WebView_ : UIViewRepresentable {
     let request: String
+    var webview: WKWebView = WKWebView()
+    
+    let requestURL: URLRequest
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        var parent: WebView_
+        
+        init(_ parent: WebView_) {
+            self.parent = parent
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            // turning web page dark by inverting colors for dark mode
+            let css = "@media (prefers-color-scheme: dark) { html{ filter: invert(1)  hue-rotate(.5turn); } img { filter: invert(1)  hue-rotate(.5turn); } }"
+            let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
+            webView.evaluateJavaScript(js, completionHandler: nil)
+            // end of turning
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
     func makeUIView(context: Context) -> WKWebView  {
-        return WKWebView()
+        webview.navigationDelegate = context.coordinator
+        webview.loadHTMLString(request, baseURL: nil)
+        return webview
     }
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.loadHTMLString(request, baseURL: nil)
-        
-        
+      //  uiView.loadHTMLString(request, baseURL: nil) 
     }
 }
 

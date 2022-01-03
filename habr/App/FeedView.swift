@@ -23,8 +23,8 @@ struct FeedView: View {
     
     @Binding var tabSelection: Int
     
-    @State var timeRemaining = 20
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    @State var timeRemaining = 20
+//    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
@@ -65,11 +65,11 @@ struct FeedView: View {
                                 .id(index)
                             
                         }
-                        if index == 0 && showingNews == true {
-                            EmbedNewsView(farrayNews: fNewsArray, tabSelection: $tabSelection)
-                                .frame(height: 200)
-                                .padding()
-                        }
+//                        if index == 0 && showingNews == true {
+//                            EmbedNewsView(farrayNews: fNewsArray, tabSelection: $tabSelection)
+//                                .frame(height: 200)
+//                                .padding()
+//                        }
                     }
                     HStack(alignment: .center) {
                         ProgressView()
@@ -78,7 +78,34 @@ struct FeedView: View {
                                 if firstLoad {
                                     DispatchQueue.global(qos: .userInitiated).async {
                                         fString = fname(furl: httpsAddress)
-                                        fNewsArray = fparseNews(fhtml: fString)
+                                       
+                                        
+                                        
+                                      fNewsArray = fparseNews(fhtml: fString)
+                                        
+//                                        fNewsArray = [FeedNewsItem(
+//                                            title: "",
+//                                            date: "",
+//                                            comments: "",
+//                                            link: ""),FeedNewsItem(
+//                                                title: "NASA is Recruiting for Yearlong Simulated Mars Mission",
+//                                                date: "today at 13:15",
+//                                                comments: "16",
+//                                                link: ""),FeedNewsItem(
+//                                                    title: "",
+//                                                    date: "",
+//                                                    comments: "",
+//                                                    link: ""),FeedNewsItem(
+//                                                        title: "",
+//                                                        date: "",
+//                                                        comments: "",
+//                                                        link: ""),FeedNewsItem(
+//                                                            title: "",
+//                                                            date: "",
+//                                                            comments: "",
+//                                                            link: "") ]
+                                        
+                                        
                                         farray = fparse(fhtml: fString)
 
                                         firstLoad = false

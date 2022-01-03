@@ -13,7 +13,7 @@ struct CommentsButtonView: View {
         GroupBox{
             HStack {
                 Image(systemName: "bubble.right")
-                Text("Комментарии")
+                Text(LocalizedStringKey("CommentsButton"))
                     .foregroundColor(Color("FeedListFont"))
                 Spacer()
                 Text(comments)
