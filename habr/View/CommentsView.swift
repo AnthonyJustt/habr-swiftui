@@ -61,7 +61,7 @@ struct CommentsView: View {
                 //  Rectangle()
                 //      .fill(.gray)
                 blurView()
-                    .opacity(toggleBottom ? 1 : 0)
+                    .opacity(toggleBottom ? 0.5 : 0)
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation{
@@ -120,6 +120,15 @@ struct CommentsView: View {
                         toggleBottom.toggle()
                     }
                 }
+            
+            HStack {
+                Button(action: {
+                    
+                }, label: {
+                   labelView(title: "html")
+                })
+            }
+            
             Text("html")
             Text("Скопировать ссылку на комментарий")
             Text("Открыть комментарий в браузере")
@@ -131,6 +140,10 @@ struct CommentsView: View {
         .background(
             Color("FeedListItem")
                 .clipShape(RoundedRectangle(cornerRadius: 35))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 35, style: .continuous)
+                        .stroke(Color("AccentColor7"))
+                ).shadow(radius: 10)
         )
         .offset(y: toggleBottom ? 0 : 350)
     }

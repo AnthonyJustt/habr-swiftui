@@ -187,6 +187,11 @@ func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArr
     var numberOfC: String = "0"
     var arrayToReturn: [commentsItem] = []
     do {
+        
+        let html_nil: String = "<p>–";
+        let doc_nil: Document = try SwiftSoup.parse(html_nil)
+        let element_nil: Element = try doc_nil.select("p").first()!
+        
         let html: String = fhtml;
         
         var indentNumber: String
@@ -195,26 +200,48 @@ func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArr
         let link: Element = try doc.select("span.tm-article-comments-counter-link__value").first()!
         numberOfC = try link.text();
         
-        let els4: Elements = try SwiftSoup.parse(html).select("div.tm-comment__body-content") // текст комментария
-        let els5: Elements = try SwiftSoup.parse(html).select("a.tm-comment-thread__comment-link") // дата комментария + ссылка на комментарий
-        let els6: Elements = try SwiftSoup.parse(html).select("a.tm-user-info__username") // автор комментария + ссылка на автора
-        let els7: Elements = try SwiftSoup.parse(html).select("span.tm-votes-meter__value") // рейтинг комментария
+        let els00: Elements = try doc.select("article.tm-comment-thread__comment") // комментарий со всеми данными (текст, дата, ссылка, автор, рейтинг, отступ)
         
-        let els8: Elements = try SwiftSoup.parse(html).select("div[class^=tm-comment-thread__indent_l-]")
-        
-        for i in 0 ..< els4.array().count {
-            indentNumber = try els8[i].attr("class")
+        for i in 0 ..< els00.array().count {
+            let els4: Element = try els00[i].select("div.tm-comment__body-content").first() ?? element_nil // текст комментария
+            let els5: Element = try els00[i].select("a.tm-comment-thread__comment-link").first() ?? element_nil // дата комментария + ссылка на комментарий
+            let els6: Element = try els00[i].select("a.tm-user-info__username").first() ?? element_nil // автор комментария + ссылка на автора
+            let els7: Element = try els00[i].select("span.tm-votes-meter__value").first() ?? element_nil // рейтинг комментария
+            
+            let els8: Elements = try els00[i].select("div[class^=tm-comment-thread__indent_l-]") // отступ комментария
+            indentNumber = try els8.attr("class")
             indentNumber = String(indentNumber[indentNumber.index(indentNumber.startIndex, offsetBy: 28)...])
+            
             arrayToReturn.append(commentsItem(
-                content: try els4[i].html(),
+                content: try els4.html(),
                 indent: indentNumber,
-                author: try els6[i].text(),
-                author_link: try els6[i].attr("href"),
-                date: try els5[i].text(),
-                link: try els5[i].attr("href"),
-                rate: try els7[i + 1].text()
-            ))
+                author: try els6.text(),
+                author_link: try els6.attr("href"),
+                date: try els5.text(),
+                link: try els5.attr("href"),
+                rate: try els7.text()))
         }
+        
+//        let els4: Elements = try doc.select("div.tm-comment__body-content") // текст комментария
+//        let els5: Elements = try doc.select("a.tm-comment-thread__comment-link") // дата комментария + ссылка на комментарий
+//        let els6: Elements = try doc.select("a.tm-user-info__username") // автор комментария + ссылка на автора
+//        let els7: Elements = try doc.select("span.tm-votes-meter__value") // рейтинг комментария
+//
+//        let els8: Elements = try doc.select("div[class^=tm-comment-thread__indent_l-]")
+//
+//        for i in 0 ..< els4.array().count {
+//            indentNumber = try els8[i].attr("class")
+//            indentNumber = String(indentNumber[indentNumber.index(indentNumber.startIndex, offsetBy: 28)...])
+//            arrayToReturn.append(commentsItem(
+//                content: try els4[i].html(),
+//                indent: indentNumber,
+//                author: try els6[i].text(),
+//                author_link: try els6[i].attr("href"),
+//                date: try els5[i].text(),
+//                link: try els5[i].attr("href"),
+//                rate: try els7[i + 1].text()
+//            ))
+//        }
         print("fparseComments: content was successfully parsed")
     }
     catch Exception.Error(let type, let message) {
