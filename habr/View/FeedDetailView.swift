@@ -172,7 +172,7 @@ struct FeedDetailView: View {
                 .progressViewStyle(CircularProgressViewStyle())
                 .onAppear(perform: {
                     DispatchQueue.global(qos: .userInitiated).async {
-                        (hubArray, tagArray, labelArray, originalArray) = fparseTags(fhtml: checkingLocal(fileName: link).html)
+//                        (hubArray, tagArray, labelArray, originalArray) = fparseTags(fhtml: checkingLocal(fileName: link).html)
                         isHidden = false
                     }
                 })

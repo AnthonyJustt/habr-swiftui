@@ -13,26 +13,35 @@ struct AuthorView: View {
     @State var isHidden: Bool = true
     var title: String // не используется, но в нем логин автора из главного вида
     var link: String
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     //     Image("EmptyImage")
                     //         .resizable()
-                    Color.white
-                        .frame(width: 100, height: 100, alignment: .center)
-                        .clipShape(Circle())
-                        .background(
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: 110, height: 110, alignment: .center)
-                        )
-                        .background(
-                            Circle()
-                                .fill(Color("AccentColor"))
-                                .frame(width: 120, height: 120, alignment: .center)
-                        )
+                    ZStack {
+                        Color("LaunchColor")
+                            .frame(width: 100, height: 100, alignment: .center)
+                            .clipShape(Circle())
+                            .background(
+                                Circle()
+                                    .fill(Color("LaunchColor"))
+                                    .frame(width: 110, height: 110, alignment: .center)
+                            )
+                            .background(
+                                Circle()
+                                    .fill(Color("AccentColor"))
+                                    .frame(width: 120, height: 120, alignment: .center)
+                            )
                         .padding()
+                        
+                        Image(systemName: "person")
+                            .foregroundColor(Color("AccentColor"))
+                            .font(.system(size: 70))
+                    }
                     
                     Text(farray.card_nickname)
                         .font(.system(.title2))
@@ -94,12 +103,15 @@ struct AuthorView: View {
                     Text("Информация".uppercased())
                         .font(.headline)
                         .padding(.horizontal)
+                        .foregroundColor(.primary)
                     VStack(alignment: .leading, spacing: 0) {
                         ForEach(infoDict.indices, id: \.self) { index in
                             HStack {
-                                Text(infoDict[index].key).foregroundColor(Color.gray)
+                                Text(infoDict[index].key)
+                                    .foregroundColor(Color.secondary)
                                 Spacer()
                                 Text(infoDict[index].value)
+                                    .foregroundColor(.primary)
                             }
                             .padding(.horizontal)
                             .frame(height:50)
@@ -109,13 +121,14 @@ struct AuthorView: View {
                             }
                         }
                     }
-                    .background(Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0))
+                    .background(colorScheme == .dark ? Color(red: 37.0/255.0, green: 47.0/255.0, blue: 50.0/255.0, opacity: 1.0) : Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0))
                     .cornerRadius(10)
                     .padding()
                 }
                 
                 Text("https://habr.com\(link)")
                     .font(.footnote)
+                    .foregroundColor(.primary)
             }
             .opacity(isHidden ? 0 : 1)
             
@@ -135,6 +148,12 @@ struct AuthorView: View {
 
 struct AuthorView_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorView(farray: AuthorItem(card_name: "Имя Фамилия_", card_nickname: "Login_", short_info: "short info text_", karma: "123.4", rating: "567,8"), title: "@Author_", link: "")
+        AuthorView(farray: AuthorItem(card_name: "Имя Фамилия_", card_nickname: "Login_", short_info: "short info text_", karma: "123.4", rating: "567,8"), infoDict: [("value", "text"),("value", "text")],title: "@Author_", link: "")
+        
+//            .previewLayout(.sizeThatFits)
+//            .padding()
+        
+//         .preferredColorScheme(.dark)
+        // .environment(\.locale, .init(identifier: "ru"))
     }
 }

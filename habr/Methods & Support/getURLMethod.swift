@@ -183,7 +183,7 @@ func fparseTags(fhtml: String) -> (hubs: Array<feedTagsItem>, tags: Array<feedTa
 
 func fparseComments(fhtml: String) -> (numberOfComments: String, commentsItemArray: Array<commentsItem>) {
     
-    // парсим комментарии к статье
+    // парсим комментарии к статье - новый метод
     var numberOfC: String = "0"
     var arrayToReturn: [commentsItem] = []
     do {

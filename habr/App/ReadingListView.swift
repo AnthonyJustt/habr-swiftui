@@ -37,52 +37,47 @@ struct ReadingListView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                List(selection: $selection) {
-                    ForEach(
-                        items.filter {
-                            searchBar.text.isEmpty || ($0.title?.lowercased().contains(searchBar.text.lowercased()))!
-                        },
-                        id: \.self
-                    ) { item in
-                        NavigationLink (destination: FeedDetailView(
-                            title: item.title!,
-                            link: item.link ?? "???",
-                            comments: item.comments ?? "???"
-                        )) {
-                            Text(item.title!)
-                        }
+
+            List(selection: $selection) {
+                ForEach(
+                    items.filter {
+                        searchBar.text.isEmpty || ($0.title?.lowercased().contains(searchBar.text.lowercased()))!
+                    },
+                    id: \.self
+                ) { item in
+                    NavigationLink (destination: FeedDetailView(
+                        title: item.title!,
+                        link: item.link ?? "???",
+                        comments: item.comments ?? "???"
+                    )) {
+                        Text(item.title!)
                     }
-                    .onDelete(perform: { indexSet in
-                        deleteItems(offsets: indexSet)
-                    })
                 }
-                .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive)).animation(Animation.spring())
-                .navigationTitle(LocalizedStringKey("ReadingList.Title"))
-                .addSearchBar(self.searchBar)
-                //  .navigationBarItems(trailing: EditButton())
-                .navigationBarItems(trailing:
-                                        Button(action: {
-                                            self.isEditing.toggle()
-                                        }) {
-                                            Text(isEditing ? "Done" : "Edit")
-                                        })
-                
-                Text("")
-                    .modifier(ConditionalModifier(isBold: isEditing))
-                
-                if items.count == 0 {
-                    EmptyPlaceholderView(imageName: "EmptyImage", rendering: true)
-                        .padding()
-                }
-                
-                
+                .onDelete(perform: { indexSet in
+                    deleteItems(offsets: indexSet)
+                })
             }
+            .environment(\.editMode, .constant(self.isEditing ? EditMode.active : EditMode.inactive)).animation(Animation.spring())
             
+            .navigationTitle(LocalizedStringKey("ReadingList.Title"))
+//             .addSearchBar(self.searchBar)
+            .navigationBarItems(trailing: EditButton())
+//            .navigationBarItems(trailing:
+//                                    Button(action: {
+//                self.isEditing.toggle()
+//            }) {
+//                Text(isEditing ? "Done" : "Edit")
+//            })
+//
+            
+            Text("")
+                .modifier(ConditionalModifier(isBold: isEditing))
+            
+            if items.count == 0 {
+                EmptyPlaceholderView(imageName: "EmptyImage", rendering: true)
+                    .padding()
+            }
         }
-        .onAppear(perform: {
-            print("reading list on appear")
-        })
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
