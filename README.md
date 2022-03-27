@@ -17,7 +17,7 @@ Main Screen & Post View
    <img src="screens/aboutpost.png" alt="Post View" height="500" />
 </div>
 
-### Built With
+## Built With
 
 * [SwiftUI](https://developer.apple.com/xcode/swiftui) 2.0 → 3.0
 * [CoreData](https://developer.apple.com/documentation/coredata)
@@ -29,6 +29,20 @@ Main Screen & Post View
 * [SwiftSoup](https://github.com/scinfu/SwiftSoup)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Features
+
+* 123
+* 234
+* 345
+
+## Installation
+
+Simply download project with Code → Download ZIP, unpack it and run habr.xcodeproj. Or you can run it through Code → Open with Xcode. 
+
+### Requirements
+- iOS 14.0+
+- Xcode 12.0+
 
 ## Roadmap
 
@@ -48,11 +62,12 @@ Distributed under the MIT License.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Contact
 
-Anton K. - illusionlance@gmail.com
+---
 
-Project Link: [https://github.com/AnthonyJustt/habr-swiftui](https://github.com/AnthonyJustt/habr-swiftui)
+> Email: illusionlance@gmail.com &nbsp;&middot;&nbsp;
+> GitHub: [https://github.com/AnthonyJustt](https://github.com/AnthonyJustt) &nbsp;&middot;&nbsp;
+> LinkedIn: [Anton K.](https://www.linkedin.com/in/a-krivonozhenkov)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
