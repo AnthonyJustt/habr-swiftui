@@ -1,10 +1,60 @@
-# habr client for <a href="https://habr.com/">habr.com</a> with swiftui
+<div id="top"></div>
 
-Main Screen
-<p float="left">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/main-screen.png" height="500 /">
-  <img src="https://raw.githubusercontent.com/AnthonyJustt/habr-swiftui/main/screens/main-screen-dark.png" height="500" />
-</p>
+<div align="center">
+  <a href="https://github.com/AnthonyJustt/habr-swiftui">
+    <img src="screens/appicon.png" alt="Logo" width="100" height="100">
+  </a>
+  <h2 align="center">habr mobile</h2>
+ </div>
+
+## About the Project
+
+habr mobile is a client for [habr.com](https://habr.com) written with SwiftUI. Habr is a massive blog platform with multimillion and multicultural audience where people post interesting content on different topics, discuss trends and much more. With habr mobile app, you can take all that goodness with you on the go with finger-tip access to the latest news and posts. 
+
+Main Screen & Post View
+<div align="center">
+   <img src="screens/aboutmain.png" alt="Main Screen" height="500" /> &nbsp;
+   <img src="screens/aboutpost.png" alt="Post View" height="500" />
+</div>
+
+### Built With
+
+* [SwiftUI](https://developer.apple.com/xcode/swiftui) 2.0 → 3.0
+* [CoreData](https://developer.apple.com/documentation/coredata)
+* [Combine](https://developer.apple.com/documentation/combine)
+* [GDC](https://developer.apple.com/documentation/DISPATCH)
+* [Matched Geometry Effect](https://designcode.io/swiftui-ios15-part2-matched-geometry-effect)
+* [Custom Tab Bar](https://designcode.io/swiftui-ios15-custom-tab-bar)
+* [Alert Toast](https://github.com/elai950/AlertToast)
+* [SwiftSoup](https://github.com/scinfu/SwiftSoup)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Roadmap
+
+- [x] Custom Tab Bar
+- [x] Custom transitions for Reading List
+- [ ] Add compatibility with user profile
+- [ ] Color correction for dark scheme
+- [ ] Asynch loading for comments
+- [ ] iPad adaptation 
+- [ ] Deep Links & Quick Actions
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+
+Distributed under the MIT License.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Contact
+
+Anton K. - illusionlance@gmail.com
+
+Project Link: [https://github.com/AnthonyJustt/habr-swiftui](https://github.com/AnthonyJustt/habr-swiftui)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 Preview
 <p float="left">
