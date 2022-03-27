@@ -65,7 +65,7 @@ Distributed under the MIT License.
 
 ---
 
-> Email: illusionlance@gmail.com &nbsp;&middot;&nbsp;
+> Email: 160493@outlook.com &nbsp;&middot;&nbsp;
 > GitHub: [https://github.com/AnthonyJustt](https://github.com/AnthonyJustt) &nbsp;&middot;&nbsp;
 > LinkedIn: [Anton K.](https://www.linkedin.com/in/a-krivonozhenkov)
 
